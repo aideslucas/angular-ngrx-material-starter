@@ -31,27 +31,20 @@ export function bookReducer(
 ): BookState {
   switch (action.type) {
     case BookActionTypes.ADD_ONE:
-      return bookAdapter.addOne(action.book, state);
+      return bookAdapter.addOne(action.payload.book, state);
+
     case BookActionTypes.UPDATE_ONE:
-      return bookAdapter.updateOne(
-        {
-          id: action.id,
-          changes: action.changes
-        },
-        state
-      );
+      return bookAdapter.updateOne(action.payload.update, state);
+
     case BookActionTypes.DELETE_ONE:
-      return bookAdapter.removeOne(action.id, state);
+      return bookAdapter.removeOne(action.payload.id, state);
+
     case BookActionTypes.SELECT_ONE:
-      return { ...state, selectedBookId: action.id };
+      return { ...state, selectedBookId: action.payload.id };
+
     default:
       return state;
   }
 }
 
-export const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal
-} = bookAdapter.getSelectors();
+export const { selectEntities, selectAll } = bookAdapter.getSelectors();
